@@ -7,9 +7,7 @@ import CatalogPage from './features/catalog/CatalogPage'
 import DashboardPage from './features/dashboard/DashboardPage'
 import QuotesPage from './features/quotes/QuotesPage'
 import CustomersPage from './features/customers/CustomersPage'
-import {
-  SettingsPage,
-} from './features/placeholder/PlaceholderPages'
+import SettingsPage from './features/settings/SettingsPage'
 
 function App() {
   return (

@@ -54,10 +54,25 @@ async def callback_router(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Fallback: prova il vecchio handler misure
         await measures_callback_handler(update, context)
 
+from handlers.errors import check_rate_limit, sanitize_input
+
 
 async def text_router(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Smista i messaggi di testo in base allo stato della sessione."""
     chat_id = update.effective_chat.id
+    user_id = update.effective_user.id if update.effective_user else chat_id
+
+    # Rate limiting
+    if check_rate_limit(user_id):
+        await update.message.reply_text(
+            "⚠️ Troppi messaggi. Attendi un momento prima di continuare."
+        )
+        return
+
+    # Sanitizza input
+    if update.message.text:
+        update.message.text = sanitize_input(update.message.text)
+
     session = await SessionManager.get_session(chat_id)
 
     if not session:
