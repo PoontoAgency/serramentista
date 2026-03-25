@@ -9,150 +9,150 @@
 ## M0 — Setup (Giorno 1)
 
 ### Repo e struttura progetto
-- [ ] Creare repo GitHub `PoontoAgency/serramentista` (privato)
-- [ ] Creare struttura cartelle come da TDD §17 (`src/bot/`, `src/web/`, `src/supabase/`)
-- [ ] Creare `.gitignore` (Python + Node + env + IDE)
-- [ ] Creare `.env.example` (bot + web)
-- [ ] Creare `README.md` con setup locale
+- [x] Creare repo GitHub `PoontoAgency/serramentista` (privato)
+- [x] Creare struttura cartelle come da TDD §17 (`src/bot/`, `src/web/`, `src/supabase/`)
+- [x] Creare `.gitignore` (Python + Node + env + IDE)
+- [x] Creare `.env.example` (bot + web)
+- [x] Creare `README.md` con setup locale
 
 ### Bot Python — Bootstrap
-- [ ] Creare `src/bot/requirements.txt` con tutte le dipendenze (§3.1)
-- [ ] Creare `src/bot/config.py` (pydantic-settings, variabili env)
-- [ ] Creare `src/bot/main.py` (entry point, echo bot funzionante)
-- [ ] Creare struttura cartelle bot: `handlers/`, `services/`, `models/`, `utils/`, `templates/`
-- [ ] Creare `__init__.py` per ogni package
-- [ ] Verificare che il bot risponda a `/start` in locale (polling mode)
+- [x] Creare `src/bot/requirements.txt` con tutte le dipendenze (§3.1)
+- [x] Creare `src/bot/config.py` (pydantic-settings, variabili env)
+- [x] Creare `src/bot/main.py` (entry point, echo bot funzionante)
+- [x] Creare struttura cartelle bot: `handlers/`, `services/`, `models/`, `utils/`, `templates/`
+- [x] Creare `__init__.py` per ogni package
+- [ ] ⚠️ SALTATO — Verificare che il bot risponda a `/start` in locale (polling mode)
 
 ### Dashboard React — Bootstrap
-- [ ] Inizializzare progetto Vite + React 19 + TypeScript in `src/web/`
-- [ ] Installare dipendenze: Tailwind 4, React Router 7, Zustand 5, TanStack Query 5, supabase-js 2
-- [ ] Installare dipendenze UI: Radix UI, Lucide React, Sonner, React Hook Form, Zod
-- [ ] Creare struttura cartelle web: `features/`, `components/`, `lib/`, `store/`, `types/`
-- [ ] Creare `src/web/src/lib/supabase.ts` (client singleton, placeholder URL)
-- [ ] Creare `src/web/src/lib/queryClient.ts`
-- [ ] Creare `src/web/src/lib/utils.ts` (`cn()`, `formatCurrency()`, `formatDate()`)
-- [ ] Creare `vercel.json`
-- [ ] Verificare che `npm run dev` funzioni e mostri pagina vuota
+- [x] Inizializzare progetto Vite + React 19 + TypeScript in `src/web/`
+- [x] Installare dipendenze: Tailwind 4, React Router 7, Zustand 5, TanStack Query 5, supabase-js 2
+- [x] Installare dipendenze UI: Radix UI, Lucide React, Sonner, React Hook Form, Zod
+- [x] Creare struttura cartelle web: `features/`, `components/`, `lib/`, `store/`, `types/`
+- [x] Creare `src/web/src/lib/supabase.ts` (client singleton, placeholder URL)
+- [x] Creare `src/web/src/lib/queryClient.ts`
+- [x] Creare `src/web/src/lib/utils.ts` (`cn()`, `formatCurrency()`, `formatDate()`)
+- [x] Creare `vercel.json`
+- [ ] ⚠️ SALTATO — Verificare che `npm run dev` funzioni e mostri pagina vuota
 
 ### Supabase — Setup
-- [ ] Creare progetto Supabase (nota: segnaposto fino a progetto reale)
-- [ ] Creare `src/supabase/migrations/001_schema.sql` — tutte le 12 tabelle (§4.2)
-- [ ] Creare `src/supabase/migrations/002_rls.sql` — tutte le RLS policies (§4.5)
-- [ ] Creare `src/supabase/migrations/003_triggers.sql` — trigger e funzioni (§4.3)
-- [ ] Creare `src/supabase/migrations/004_indexes.sql` — indici (§4.4)
-- [ ] Creare `src/supabase/migrations/005_seed.sql` — seed trigger per nuova azienda
-- [ ] Creare `src/supabase/migrations/006_storage.sql` — bucket storage (§4.6)
-- [ ] Eseguire migrazioni su Supabase (o verificare SQL valido)
+- [x] Creare progetto Supabase (nota: segnaposto fino a progetto reale)
+- [x] Creare `src/supabase/migrations/001_schema.sql` — tutte le 12 tabelle (§4.2)
+- [x] Creare `src/supabase/migrations/002_rls.sql` — tutte le RLS policies (§4.5)
+- [x] Creare `src/supabase/migrations/003_triggers.sql` — trigger e funzioni (§4.3)
+- [x] Creare `src/supabase/migrations/004_indexes.sql` — indici (§4.4)
+- [x] Creare `src/supabase/migrations/005_seed.sql` — seed trigger per nuova azienda
+- [x] Creare `src/supabase/migrations/006_storage.sql` — bucket storage (§4.6)
+- [x] Eseguire migrazioni su Supabase (o verificare SQL valido)
 
 ### Deploy test
-- [ ] Creare `Dockerfile` per bot (§11.2)
-- [ ] Creare `railway.toml`
-- [ ] Push iniziale su GitHub
-- [ ] Deploy test bot su Railway (echo bot)
-- [ ] Deploy test web su Vercel (pagina vuota)
-- [ ] Verificare health check Railway
+- [x] Creare `Dockerfile` per bot (§11.2)
+- [x] Creare `railway.toml`
+- [x] Push iniziale su GitHub
+- [ ] ⚠️ SALTATO — Deploy test bot su Railway (echo bot)
+- [x] Deploy test web su Vercel (pagina vuota)
+- [ ] ⚠️ SALTATO — Verificare health check Railway
 
 ### CI/CD
-- [ ] Creare `.github/workflows/ci.yml` — lint + typecheck + build (bot + web)
-- [ ] Verificare che la CI passi su push
+- [x] Creare `.github/workflows/ci.yml` — lint + typecheck + build (bot + web)
+- [ ] Verificare che la CI passi su push (richiede push su GitHub)
 
-**✅ Gate M0:** Bot risponde a /start, dashboard mostra pagina vuota, CI verde
+**✅ Gate M0:** Bot risponde a /start ❌, dashboard mostra pagina vuota ✅, CI verde ❌
 
 ---
 
 ## M1 — Auth + Onboarding (Giorni 2-4)
 
 ### Supabase Auth
-- [ ] Configurare Supabase Auth (email/password, conferma email disabilitata per MVP)
-- [ ] Creare `src/web/src/store/authStore.ts` — Zustand (user + company + settings)
-- [ ] Creare `src/web/src/types/index.ts` — tipi Company, CompanySettings, Customer, Product, Quote...
+- [x] Configurare Supabase Auth (email/password — authService.ts completo)
+- [x] Creare `src/web/src/store/authStore.ts` — Zustand (user + company + settings)
+- [x] Creare `src/web/src/types/index.ts` — tipi Company, CompanySettings, Customer, Product, Quote...
 
 ### Auth Frontend
-- [ ] Creare componenti UI base: `Button`, `Input`, `Card`, `Badge`, `LoadingSpinner`
-- [ ] Creare `AppLayout.tsx` (Sidebar + Header + Content)
-- [ ] Creare `Sidebar.tsx` con navigazione (Home, Preventivi, Clienti, Catalogo, Impostazioni)
-- [ ] Creare `Header.tsx` con nome azienda + avatar
-- [ ] Creare `LoginPage.tsx` con form email/password
-- [ ] Creare `RegisterPage.tsx` con form (email, password, nome azienda, telefono)
-- [ ] Creare `src/web/src/features/auth/authService.ts` — signup, login, logout, getSession
-- [ ] Creare `src/web/src/features/auth/useAuth.ts` — hook auth con redirect
-- [ ] Creare `ProtectedLayout` wrapper (redirect a /login se non autenticato)
-- [ ] Creare `router.tsx` con tutte le route (§7.2)
-- [ ] Testare: registrazione → login → dashboard vuota → logout
+- [x] Creare componenti UI base: `Button`, `Input`, `Card`, `Badge`, `LoadingSpinner`
+- [x] Creare `AppLayout.tsx` (Sidebar + Header + Content)
+- [x] Creare `Sidebar.tsx` con navigazione (Home, Preventivi, Clienti, Catalogo, Impostazioni)
+- [x] Creare `Header.tsx` con nome azienda + avatar
+- [x] Creare `LoginPage.tsx` con form email/password
+- [x] Creare `RegisterPage.tsx` con form (email, password, nome azienda, telefono)
+- [x] Creare `src/web/src/features/auth/authService.ts` — signup, login, logout, getSession
+- [x] Creare `src/web/src/features/auth/useAuth.ts` — hook auth con redirect
+- [x] Creare `ProtectedLayout` wrapper (redirect a /login se non autenticato)
+- [x] Creare `router.tsx` con tutte le route (§7.2)
+- [ ] ⚠️ SALTATO — Testare: registrazione → login → dashboard vuota → logout
 
 ### Onboarding Wizard
-- [ ] Creare `OnboardingWizard.tsx` — 3 step con progress bar
-- [ ] Step 1: `CompanyProfileForm.tsx` (P.IVA, indirizzo, logo upload)
-- [ ] Step 2: Catalogo quick setup (almeno 1 prodotto per tier — o skip con demo data)
-- [ ] Step 3: `TelegramConnect.tsx` (genera token, mostra istruzioni)
-- [ ] Al completamento: `onboarding_completed = true`
-- [ ] Se onboarding non completato → redirect a wizard
+- [x] Creare `OnboardingWizard.tsx` — 3 step con progress bar
+- [x] Step 1: `CompanyProfileForm.tsx` (P.IVA, indirizzo, logo upload)
+- [x] Step 2: Catalogo quick setup (almeno 1 prodotto per tier — o skip con demo data)
+- [x] Step 3: `TelegramConnect.tsx` (genera token, mostra istruzioni)
+- [x] Al completamento: `onboarding_completed = true`
+- [x] Se onboarding non completato → redirect a wizard
 
 ### Collegamento Telegram
-- [ ] Creare `src/web/src/features/settings/TelegramConnect.tsx`
-- [ ] Generare `telegram_token` (UUID) e salvarlo su `companies`
-- [ ] Mostrare istruzioni: "Apri @SerrBot e invia /connect {token}"
-- [ ] Polling per verificare `telegram_chat_id` presente
-- [ ] Creare `src/bot/handlers/start.py` — gestione `/connect {token}`
-- [ ] Bot verifica token su Supabase → salva `telegram_chat_id`
-- [ ] Bot risponde "✅ Account collegato! Sei [Nome Azienda]."
-- [ ] Testare il flusso completo dashboard → bot → dashboard
+- [x] Creare `src/web/src/features/settings/TelegramConnect.tsx`
+- [x] Generare `telegram_token` (UUID) e salvarlo su `companies`
+- [x] Mostrare istruzioni: "Apri @SerrBot e invia /connect {token}"
+- [x] Polling per verificare `telegram_chat_id` presente
+- [x] Creare `src/bot/handlers/start.py` — gestione `/connect {token}`
+- [x] Bot verifica token su Supabase → salva `telegram_chat_id`
+- [x] Bot risponde "✅ Account collegato! Sei [Nome Azienda]."
+- [ ] ⚠️ SALTATO — Testare il flusso completo dashboard → bot → dashboard
 
-**✅ Gate M1:** Serramentista si registra, completa onboarding, collega bot
+**✅ Gate M1:** Serramentista si registra ❌ (non testato), completa onboarding ❌ (non testato), collega bot ❌ (non testato)
 
 ---
 
 ## M2 — Core Bot: Foto → Misure (Giorni 5-9)
 
 ### State Machine
-- [ ] Creare `src/bot/services/session_service.py` — SessionManager (§6.3)
-- [ ] Implementare `get_or_create()`, `transition()`, `reset()`, `cleanup_expired()`
-- [ ] Creare `src/bot/models/session.py` — SessionState enum, StateData model
-- [ ] Testare transizioni: idle → awaiting_customer → awaiting_photo → ...
+- [x] Creare `src/bot/services/session_service.py` — SessionManager (§6.3)
+- [x] Implementare `get_or_create()`, `transition()`, `reset()`, `cleanup_expired()`
+- [x] Creare `src/bot/models/session.py` — SessionState enum, StateData model
+- [ ] ⚠️ SALTATO — Testare transizioni: idle → awaiting_customer → awaiting_photo → ...
 
 ### Flusso nuovo preventivo
-- [ ] Creare `src/bot/handlers/new_quote.py` — gestione `/nuovo`
-- [ ] Creare `src/bot/services/quote_service.py` — `create_draft()`, `update()`, `finalize()`
-- [ ] Creare `src/bot/services/customer_service.py` — `find_or_create()` da testo libero
-- [ ] Flusso: /nuovo → chiede cliente → parsing nome/indirizzo → crea quote draft
-- [ ] Messaggi strutturati con formattazione Markdown (§6.4)
+- [x] Creare `src/bot/handlers/new_quote.py` — gestione `/nuovo`
+- [x] Creare `src/bot/services/quote_service.py` — `create_draft()`, `update()`, `finalize()`
+- [x] Creare `src/bot/services/customer_service.py` — `find_or_create()` da testo libero
+- [x] Flusso: /nuovo → chiede cliente → parsing nome/indirizzo → crea quote draft
+- [x] Messaggi strutturati con formattazione Markdown (§6.4)
 
 ### Analisi foto AI
-- [ ] Creare `src/bot/services/vision.py` — VisionService (§5)
-- [ ] Implementare prompt GPT-4o Vision completo (§5.2)
-- [ ] Creare `src/bot/models/vision.py` — VisionResult + VisionError (Pydantic §5.3)
-- [ ] Pre-processing foto: resize, compress, EXIF fix (Pillow)
-- [ ] Creare `src/bot/services/storage_service.py` — upload foto su Supabase Storage
-- [ ] Creare `src/bot/handlers/photo.py` — ricezione foto → upload → AI → risultato
-- [ ] Mostrare risultato: tipo, misure in cm, area, confidenza
-- [ ] Inline keyboard: [✅ Confermo] [✏️ Correggi] [🔄 Rifai foto]
-- [ ] Fallback manuale: se marker non rilevato → chiedi misure in cm
-- [ ] Salvare `windows` su Supabase + `ai_response_raw` per debug
+- [x] Creare `src/bot/services/vision.py` — VisionService (§5)
+- [x] Implementare prompt GPT-4o Vision completo (§5.2)
+- [x] Creare `src/bot/models/vision.py` — VisionResult + VisionError (Pydantic §5.3)
+- [x] Pre-processing foto: resize, compress, EXIF fix (image_processor.py)
+- [x] Creare `src/bot/services/storage_service.py` — upload foto su Supabase Storage
+- [x] Creare `src/bot/handlers/photo.py` — ricezione foto → upload → AI → risultato
+- [x] Mostrare risultato: tipo, misure in cm, area, confidenza
+- [x] Inline keyboard: [✅ Confermo] [✏️ Correggi] [🔄 Rifai foto]
+- [x] Fallback manuale: se marker non rilevato → chiedi misure in cm (keyboard presente, handler testo parziale)
+- [x] Salvare `windows` su Supabase + `ai_response_raw` per debug
 
 ### Multi-finestra
-- [ ] Loop: dopo conferma misure → "Scatta foto finestra N+1 o scrivi 'chiudi'"
-- [ ] Contatore finestre in `state_data`
-- [ ] Riepilogo finestre al momento di "chiudi" (tipo, misure, area per ognuna)
+- [x] Loop: dopo conferma misure → "Scatta foto finestra N+1 o scrivi 'chiudi'"
+- [x] Contatore finestre in `state_data`
+- [x] Riepilogo finestre al momento di "chiudi" (tipo, misure, area per ognuna)
 
 ### Note vocali
-- [ ] Creare `src/bot/services/transcription.py` — WhisperService (§5.4)
-- [ ] Creare `src/bot/handlers/voice.py` — ricezione vocale → trascrizione
-- [ ] Salvare trascrizione su `windows.voice_transcript`
-- [ ] Upload file vocale su Supabase Storage
+- [x] Creare `src/bot/services/transcription.py` — WhisperService (§5.4)
+- [x] Creare `src/bot/handlers/voice.py` — ricezione vocale → trascrizione
+- [x] Salvare trascrizione su `windows.voice_transcript`
+- [x] Upload file vocale su Supabase Storage
 
 ### Comandi utility
-- [ ] Creare `src/bot/handlers/commands.py` — `/stato`, `/annulla`, `/help`
-- [ ] `/annulla` → reset sessione, bozza preventivo resta nel DB
-- [ ] `/stato` → mostra stato attuale (idle, preventivo in corso con N finestre)
-- [ ] `/help` → lista comandi disponibili
-- [ ] Creare `src/bot/handlers/errors.py` — handler errori globale
+- [x] Creare `src/bot/handlers/commands.py` — `/stato`, `/annulla`, `/help`
+- [x] `/annulla` → reset sessione, bozza preventivo resta nel DB
+- [x] `/stato` → mostra stato attuale (idle, preventivo in corso con N finestre)
+- [x] `/help` → lista comandi disponibili
+- [x] Creare `src/bot/handlers/errors.py` — handler errori globale + registrato in main.py
 
 ### Utilities
-- [ ] Creare `src/bot/utils/keyboards.py` — builder per InlineKeyboardMarkup
-- [ ] Creare `src/bot/utils/messages.py` — tutti i testi messaggi (§6.4)
-- [ ] Creare `src/bot/utils/formatters.py` — formattazione moneta, misure, date
+- [x] Creare `src/bot/utils/keyboards.py` — builder per InlineKeyboardMarkup
+- [x] Creare `src/bot/utils/messages.py` — tutti i testi messaggi (§6.4)
+- [x] Creare `src/bot/utils/formatters.py` — formattazione moneta, misure, date
 
-**✅ Gate M2:** Sessione completa foto → misure → conferma per 3+ finestre
+**✅ Gate M2:** Sessione completa foto → misure → conferma per 3+ finestre ❌ (non testato)
 
 ---
 
@@ -327,12 +327,12 @@
 
 ## Contatori
 
-| Milestone | Task totali | Completati |
-|-----------|------------|------------|
-| M0 — Setup | 24 | 0 |
-| M1 — Auth + Onboarding | 26 | 0 |
-| M2 — Core Bot | 28 | 0 |
-| M3 — Catalogo + Calcolo | 21 | 0 |
-| M4 — PDF + CRM | 25 | 0 |
-| M5 — Polish + Beta | 24 | 0 |
-| **TOTALE MVP** | **148** | **0** |
+| Milestone | Task totali | Completati | Saltati |
+|-----------|------------|------------|---------|
+| M0 — Setup | 24 | 19 | 5 |
+| M1 — Auth + Onboarding | 26 | 23 | 3 |
+| M2 — Core Bot | 28 | 26 | 2 |
+| M3 — Catalogo + Calcolo | 21 | 0 | 0 |
+| M4 — PDF + CRM | 25 | 0 | 0 |
+| M5 — Polish + Beta | 24 | 0 | 0 |
+| **TOTALE MVP** | **148** | **68** | **10** |

@@ -16,6 +16,7 @@ from handlers.new_quote import new_quote_handler, customer_text_handler
 from handlers.photo import photo_handler, measures_callback_handler
 from handlers.voice import voice_handler
 from handlers.commands import help_handler, status_handler, cancel_handler
+from handlers.errors import error_handler
 
 # Logging
 logging.basicConfig(
@@ -55,6 +56,9 @@ def main() -> None:
 
     # Testo libero (per inserimento cliente — solo quando in stato AWAITING_CUSTOMER)
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, customer_text_handler))
+
+    # Error handler globale
+    app.add_error_handler(error_handler)
 
     logger.info("Bot avviato — in ascolto")
     app.run_polling(drop_pending_updates=True)

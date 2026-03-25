@@ -1,0 +1,65 @@
+name: CI — Serramentista
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  web-lint-build:
+    name: Web — Lint + Typecheck + Build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: src/web/package-lock.json
+      - run: npm ci
+      - run: npx tsc --noEmit
+      - run: npm run build
+
+  bot-lint:
+    name: Bot — Syntax + Import check
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/bot
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      # Core — py_compile (no env vars needed)
+      - run: python -m py_compile main.py
+      - run: python -m py_compile config.py
+      # Handlers — py_compile (import cascade into config needs env vars)
+      - run: python -m py_compile handlers/start.py
+      - run: python -m py_compile handlers/new_quote.py
+      - run: python -m py_compile handlers/photo.py
+      - run: python -m py_compile handlers/voice.py
+      - run: python -m py_compile handlers/commands.py
+      - run: python -m py_compile handlers/errors.py
+      # Services — py_compile
+      - run: python -m py_compile services/vision.py
+      - run: python -m py_compile services/session_service.py
+      - run: python -m py_compile services/quote_service.py
+      - run: python -m py_compile services/customer_service.py
+      - run: python -m py_compile services/storage_service.py
+      - run: python -m py_compile services/transcription.py
+      - run: python -m py_compile services/image_processor.py
+      # Models — import OK (no env vars dependency)
+      - run: python -c "from models.session import SessionState; print('models.session OK')"
+      - run: python -c "from models.vision import VisionResult, VisionError; print('models.vision OK')"
+      # Utils — import OK (no env vars dependency)
+      - run: python -c "from utils.formatters import format_currency; print(format_currency(1234.56))"
+      - run: python -c "from utils.keyboards import confirm_measures_keyboard; print('utils.keyboards OK')"
+      - run: python -c "from utils.messages import MSG_START; print('utils.messages OK')"
+      # Image processor — import OK (no env vars dependency)
+      - run: python -c "from services.image_processor import process_photo; print('image_processor OK')"

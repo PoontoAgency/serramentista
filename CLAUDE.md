@@ -30,6 +30,29 @@ Per **TUTTE** le seguenti operazioni è **OBBLIGATORIO**:
 - **MAI** committare password, token, API key o credenziali in nessun file del repo
 - I segreti vivono SOLO su Hetzner e in Memoria AI, MAI nel codice
 
+## 🚨 OBBLIGO — Task Breakdown
+
+> **OBBLIGO ASSOLUTO.** Non esistono scorciatoie. Non si salta nessun task.
+
+1. **PRIMA** di iniziare qualsiasi lavoro: aprire e leggere `TASK_BREAKDOWN.md`
+2. Individuare il **prossimo task non spuntato** nell'ordine scritto
+3. Eseguire **quel task e solo quel task**
+4. **Spuntarlo** nel file (`[ ]` → `[x]`) dopo averlo completato
+5. Passare al task successivo — **MAI saltare avanti**
+6. Se un task è un test/verifica → **eseguirlo davvero**, non saltarlo
+7. Non passare alla milestone successiva finché TUTTI i task della milestone corrente non sono `[x]`
+
+## 🚨 OBBLIGO — Qualità sopra velocità
+
+> **OBBLIGO ASSOLUTO.** Non si va di fretta. Si fanno le cose per bene.
+
+- Scegliere **SEMPRE** la strada più professionale, mai quella più veloce e superficiale
+- Ogni file scritto deve essere **testato e verificato** prima di considerarlo completato
+- Mai scrivere codice "tanto poi lo sistemo" — farlo giusto la prima volta
+- Se c'è un modo corretto e uno veloce, scegliere **SEMPRE** quello corretto
+- Non accumulare debito tecnico: fix, test e verifica subito, non "dopo"
+- La fretta produce errori (secret leak, deploy falliti, task saltati) — la calma produce qualità
+
 ---
 
 ## Progetto

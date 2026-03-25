@@ -13,6 +13,7 @@ from services.quote_service import QuoteService
 from utils.keyboards import confirm_measures_keyboard, fallback_manual_keyboard, next_window_keyboard
 from utils.messages import MSG_PHOTO_ANALYZING, MSG_PHOTO_RESULT, MSG_PHOTO_NO_MARKER, MSG_NOT_CONNECTED
 from utils.formatters import format_window_type, format_area_mq
+from services.image_processor import process_photo
 
 logger = logging.getLogger(__name__)
 
@@ -44,13 +45,16 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
     photo_file = await photo.get_file()
     photo_bytes_io = BytesIO()
     await photo_file.download_to_memory(photo_bytes_io)
-    photo_bytes = photo_bytes_io.getvalue()
+    raw_bytes = photo_bytes_io.getvalue()
+
+    # Pre-processing: EXIF fix, resize, compress
+    photo_bytes = process_photo(raw_bytes)
 
     # Upload foto su Supabase Storage
     company_id = session.get("company_id")
     photo_url = await StorageService.upload_photo(company_id, photo_bytes)
 
-    # Analisi AI
+    # Analisi AI (usa foto pre-processata)
     result = await VisionService.analyze_photo(photo_bytes)
 
     if isinstance(result, VisionError):
