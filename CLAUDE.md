@@ -5,6 +5,33 @@
 
 ---
 
+## 🚨 OBBLIGO — The Lair & Guida Operativa
+
+> **OBBLIGO ASSOLUTO.** Non esistono alternative. Non esistono scorciatoie.
+> Ogni violazione è un errore grave.
+
+Per **TUTTE** le seguenti operazioni è **OBBLIGATORIO**:
+1. Leggere la guida `../Memoria AI/the_lair_tools.md` **PRIMA** di eseguire qualsiasi comando
+2. Seguire il workflow esattamente come descritto, passo per passo
+3. Usare **ESCLUSIVAMENTE** i token e le credenziali salvati su Hetzner VPS (`/home/lair/projects/the-lair/.env`)
+4. **MAI** usare token/password hardcoded, `npx vercel` diretto, o qualsiasi workaround
+
+### Operazioni coperte dall'obbligo:
+- **Creare repo GitHub** → guida, sezione CASO 1
+- **Registrare progetto su The Lair** → guida, sezione CASO 1, Passo 3
+- **Deploy dashboard (Vercel)** → guida, sezione CASO 1, Passo 4
+- **Deploy bot (Railway)** → guida
+- **Creare/modificare tabelle Supabase** → guida, sezione Supabase
+- **Collegare dominio custom** → guida, sezione Cloudflare + Vercel
+- **Inviare notifiche Telegram** → guida, sezione Telegram
+- **Qualsiasi operazione con API esterne** → guida
+
+### Regole segreti:
+- **MAI** committare password, token, API key o credenziali in nessun file del repo
+- I segreti vivono SOLO su Hetzner e in Memoria AI, MAI nel codice
+
+---
+
 ## Progetto
 
 **Serramentista** — App Telegram + Dashboard per serramentisti.
