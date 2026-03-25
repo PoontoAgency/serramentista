@@ -4,9 +4,9 @@
  */
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../../lib/supabase';
-import { Button } from '../../components/ui/Button';
-import { Card } from '../../components/ui/Card';
-import { Spinner } from '../../components/ui/Spinner';
+import Button from '../../components/ui/Button';
+import Card from '../../components/ui/Card';
+import Spinner from '../../components/ui/Spinner';
 
 interface TelegramConnectProps {
   companyId: string;
