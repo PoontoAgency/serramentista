@@ -1,0 +1,11 @@
+# Bot Serramentista — Python Dependencies
+python-telegram-bot==21.10
+httpx==0.28.1
+supabase==2.13.0
+pydantic==2.11.1
+pydantic-settings==2.8.1
+python-dotenv==1.1.0
+Pillow==11.2.1
+WeasyPrint==63.1
+Jinja2==3.1.6
+structlog==25.1.0

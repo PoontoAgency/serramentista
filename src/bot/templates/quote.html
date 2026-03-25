@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Preventivo — Serramentista</title>
+    <style>
+        /* Template PDF per preventivo — da completare in M4 */
+        @page {
+            size: A4;
+            margin: 15mm;
+            @bottom-center {
+                content: "Pagina " counter(page) " di " counter(pages);
+                font-size: 9px;
+                color: #999;
+            }
+        }
+        body {
+            font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+            font-size: 12px;
+            color: #0F172A;
+            line-height: 1.5;
+        }
+        /* TODO M4: completare stili PDF */
+    </style>
+</head>
+<body>
+    <!-- TODO M4: template Jinja2 completo per il preventivo -->
+    <p>Template PDF in sviluppo</p>
+</body>
+</html>
