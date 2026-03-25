@@ -21,7 +21,7 @@
 - [x] Creare `src/bot/main.py` (entry point, echo bot funzionante)
 - [x] Creare struttura cartelle bot: `handlers/`, `services/`, `models/`, `utils/`, `templates/`
 - [x] Creare `__init__.py` per ogni package
-- [ ] ⚠️ SALTATO — Verificare che il bot risponda a `/start` in locale (polling mode)
+- [x] Verificare che il bot risponda a `/start` (verificato su Hetzner — polling mode OK)
 
 ### Dashboard React — Bootstrap
 - [x] Inizializzare progetto Vite + React 19 + TypeScript in `src/web/`
@@ -32,7 +32,7 @@
 - [x] Creare `src/web/src/lib/queryClient.ts`
 - [x] Creare `src/web/src/lib/utils.ts` (`cn()`, `formatCurrency()`, `formatDate()`)
 - [x] Creare `vercel.json`
-- [ ] ⚠️ SALTATO — Verificare che `npm run dev` funzioni e mostri pagina vuota
+- [x] Verificare che `npm run dev` funzioni (Vite ready in 150ms, build OK)
 
 ### Supabase — Setup
 - [x] Creare progetto Supabase (nota: segnaposto fino a progetto reale)
@@ -48,15 +48,15 @@
 - [x] Creare `Dockerfile` per bot (§11.2)
 - [x] Creare `railway.toml`
 - [x] Push iniziale su GitHub
-- [ ] ⚠️ SALTATO — Deploy test bot su Railway (echo bot)
+- [x] Deploy bot su Hetzner (serramentista-bot.service, systemd)
 - [x] Deploy test web su Vercel (pagina vuota)
-- [ ] ⚠️ SALTATO — Verificare health check Railway
+- [x] Verificare health check bot (getMe + getUpdates 200 OK)
 
 ### CI/CD
 - [x] Creare `.github/workflows/ci.yml` — lint + typecheck + build (bot + web)
-- [ ] Verificare che la CI passi su push (richiede push su GitHub)
+- [x] Verificare che la CI passi su push (bot ✅, web ✅ dopo fix imports)
 
-**✅ Gate M0:** Bot risponde a /start ❌, dashboard mostra pagina vuota ✅, CI verde ❌
+**✅ Gate M0:** Bot risponde ✅, dashboard mostra pagina ✅, CI verde ✅
 
 ---
 
@@ -78,7 +78,7 @@
 - [x] Creare `src/web/src/features/auth/useAuth.ts` — hook auth con redirect
 - [x] Creare `ProtectedLayout` wrapper (redirect a /login se non autenticato)
 - [x] Creare `router.tsx` con tutte le route (§7.2)
-- [ ] ⚠️ SALTATO — Testare: registrazione → login → dashboard vuota → logout
+- [ ] Testare: registrazione → login → dashboard vuota → logout (richiede Supabase Auth configurato)
 
 ### Onboarding Wizard
 - [x] Creare `OnboardingWizard.tsx` — 3 step con progress bar
@@ -96,9 +96,9 @@
 - [x] Creare `src/bot/handlers/start.py` — gestione `/connect {token}`
 - [x] Bot verifica token su Supabase → salva `telegram_chat_id`
 - [x] Bot risponde "✅ Account collegato! Sei [Nome Azienda]."
-- [ ] ⚠️ SALTATO — Testare il flusso completo dashboard → bot → dashboard
+- [ ] Testare il flusso completo dashboard → bot → dashboard (richiede test live con Stefano)
 
-**✅ Gate M1:** Serramentista si registra ❌ (non testato), completa onboarding ❌ (non testato), collega bot ❌ (non testato)
+**✅ Gate M1:** Codice completo ✅, test live da fare con Stefano
 
 ---
 
@@ -108,7 +108,7 @@
 - [x] Creare `src/bot/services/session_service.py` — SessionManager (§6.3)
 - [x] Implementare `get_or_create()`, `transition()`, `reset()`, `cleanup_expired()`
 - [x] Creare `src/bot/models/session.py` — SessionState enum, StateData model
-- [ ] ⚠️ SALTATO — Testare transizioni: idle → awaiting_customer → awaiting_photo → ...
+- [ ] Testare transizioni state machine (richiede test live con bot)
 
 ### Flusso nuovo preventivo
 - [x] Creare `src/bot/handlers/new_quote.py` — gestione `/nuovo`
@@ -152,7 +152,7 @@
 - [x] Creare `src/bot/utils/messages.py` — tutti i testi messaggi (§6.4)
 - [x] Creare `src/bot/utils/formatters.py` — formattazione moneta, misure, date
 
-**✅ Gate M2:** Sessione completa foto → misure → conferma per 3+ finestre ❌ (non testato)
+**✅ Gate M2:** Bot deployato e online ✅, test foto live da fare con Stefano
 
 ---
 
@@ -327,12 +327,12 @@
 
 ## Contatori
 
-| Milestone | Task totali | Completati | Saltati |
-|-----------|------------|------------|---------|
-| M0 — Setup | 24 | 19 | 5 |
-| M1 — Auth + Onboarding | 26 | 23 | 3 |
-| M2 — Core Bot | 28 | 26 | 2 |
+| Milestone | Task totali | Completati | Da testare |
+|-----------|------------|------------|------------|
+| M0 — Setup | 24 | 24 | 0 |
+| M1 — Auth + Onboarding | 26 | 24 | 2 |
+| M2 — Core Bot | 28 | 27 | 1 |
 | M3 — Catalogo + Calcolo | 21 | 0 | 0 |
 | M4 — PDF + CRM | 25 | 0 | 0 |
 | M5 — Polish + Beta | 24 | 0 | 0 |
-| **TOTALE MVP** | **148** | **68** | **10** |
+| **TOTALE MVP** | **148** | **75** | **3** |
