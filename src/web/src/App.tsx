@@ -4,10 +4,10 @@ import LoginPage from './features/auth/LoginPage'
 import RegisterPage from './features/auth/RegisterPage'
 import OnboardingWizard from './features/onboarding/OnboardingWizard'
 import CatalogPage from './features/catalog/CatalogPage'
+import DashboardPage from './features/dashboard/DashboardPage'
+import QuotesPage from './features/quotes/QuotesPage'
+import CustomersPage from './features/customers/CustomersPage'
 import {
-  DashboardPage,
-  QuotesPage,
-  CustomersPage,
   SettingsPage,
 } from './features/placeholder/PlaceholderPages'
 

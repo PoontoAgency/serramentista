@@ -1,0 +1,95 @@
+/* dashboard.css */
+.dashboard-page { max-width: 1200px; margin: 0 auto; }
+
+.dashboard-header h2 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.25rem; }
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.kpi-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.kpi-card.accent {
+  background: linear-gradient(135deg, #1a56db 0%, #3b82f6 100%);
+  color: white;
+  border: none;
+}
+
+.kpi-card.accent .kpi-label { color: rgba(255,255,255,0.8); }
+
+.kpi-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+
+.kpi-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 0.25rem;
+}
+
+.kpi-label {
+  font-size: 0.8125rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.recent-section h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.recent-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  transition: border-color 0.2s;
+}
+
+.recent-item:hover { border-color: #1a56db; }
+
+.recent-info { display: flex; gap: 0.75rem; align-items: center; }
+.recent-number { font-weight: 600; font-size: 0.875rem; }
+.recent-customer { color: #6b7280; font-size: 0.875rem; }
+
+.recent-meta { display: flex; gap: 0.75rem; align-items: center; }
+
+.status-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.recent-status { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+.recent-value { font-family: 'JetBrains Mono', monospace; font-size: 0.875rem; font-weight: 500; }
+
+.empty-state { text-align: center; padding: 2rem; color: #6b7280; }
+.hint { font-size: 0.875rem; color: #9ca3af; margin-top: 0.5rem; }
+.subtitle { color: #6b7280; margin-bottom: 1.5rem; }

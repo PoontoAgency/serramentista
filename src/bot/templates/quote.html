@@ -1,30 +1,358 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <title>Preventivo — Serramentista</title>
-    <style>
-        /* Template PDF per preventivo — da completare in M4 */
-        @page {
-            size: A4;
-            margin: 15mm;
-            @bottom-center {
-                content: "Pagina " counter(page) " di " counter(pages);
-                font-size: 9px;
-                color: #999;
-            }
-        }
-        body {
-            font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
-            font-size: 12px;
-            color: #0F172A;
-            line-height: 1.5;
-        }
-        /* TODO M4: completare stili PDF */
-    </style>
+<meta charset="UTF-8">
+<style>
+@page {
+  size: A4;
+  margin: 15mm;
+  @bottom-center {
+    content: "Preventivo generato con Serramentista by Poonto";
+    font-size: 8pt;
+    color: #999;
+  }
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 10pt;
+  color: #1f2937;
+  line-height: 1.5;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 2px solid #1a56db;
+  padding-bottom: 12pt;
+  margin-bottom: 16pt;
+}
+
+.company-info { flex: 1; }
+
+.company-name {
+  font-size: 16pt;
+  font-weight: 700;
+  color: #1a56db;
+  margin-bottom: 2pt;
+}
+
+.company-details {
+  font-size: 8.5pt;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.company-logo {
+  max-width: 80pt;
+  max-height: 60pt;
+  margin-left: 12pt;
+}
+
+.quote-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16pt;
+  padding: 10pt 14pt;
+  background: #f0f5ff;
+  border-radius: 4pt;
+}
+
+.quote-number {
+  font-size: 14pt;
+  font-weight: 700;
+  color: #1a56db;
+}
+
+.quote-meta {
+  text-align: right;
+  font-size: 9pt;
+  color: #6b7280;
+}
+
+.customer-box {
+  margin-bottom: 16pt;
+  padding: 10pt 14pt;
+  border: 1px solid #e5e7eb;
+  border-radius: 4pt;
+}
+
+.customer-box h3 {
+  font-size: 9pt;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+  color: #6b7280;
+  margin-bottom: 4pt;
+}
+
+.customer-name { font-size: 12pt; font-weight: 600; }
+.customer-address { font-size: 9pt; color: #6b7280; }
+
+.section-title {
+  font-size: 11pt;
+  font-weight: 700;
+  color: #1a56db;
+  text-transform: uppercase;
+  letter-spacing: 0.5pt;
+  margin: 16pt 0 8pt;
+  padding-bottom: 4pt;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 12pt;
+  font-size: 9pt;
+}
+
+th {
+  background: #f3f4f6;
+  font-weight: 600;
+  text-align: left;
+  padding: 6pt 8pt;
+  border-bottom: 1px solid #d1d5db;
+  font-size: 8.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.3pt;
+  color: #374151;
+}
+
+td {
+  padding: 6pt 8pt;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+tr:last-child td { border-bottom: none; }
+
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+.font-bold { font-weight: 600; }
+
+.tier-base { background: #dcfce7; color: #166534; }
+.tier-medio { background: #fef9c3; color: #854d0e; }
+.tier-top { background: #fecaca; color: #991b1b; }
+
+.totals-table { margin-top: 12pt; }
+.totals-table td { padding: 8pt; }
+
+.total-row {
+  font-weight: 700;
+  font-size: 11pt;
+  border-top: 2px solid #1a56db;
+}
+
+.total-iva {
+  font-weight: 700;
+  font-size: 12pt;
+  color: #1a56db;
+}
+
+.extras-list { margin-bottom: 8pt; }
+
+.extra-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 4pt 0;
+  border-bottom: 1px dotted #d1d5db;
+}
+
+.extra-name { color: #374151; }
+.extra-price { font-weight: 600; text-align: right; }
+
+.notes-box {
+  margin-top: 16pt;
+  padding: 10pt 14pt;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 4pt;
+  font-size: 9pt;
+}
+
+.notes-box h3 { font-size: 9pt; font-weight: 600; margin-bottom: 4pt; }
+
+.footer {
+  margin-top: 24pt;
+  padding-top: 8pt;
+  border-top: 1px solid #e5e7eb;
+  text-align: center;
+  font-size: 8pt;
+  color: #9ca3af;
+}
+</style>
 </head>
 <body>
-    <!-- TODO M4: template Jinja2 completo per il preventivo -->
-    <p>Template PDF in sviluppo</p>
+
+<!-- Header azienda -->
+<div class="header">
+  <div class="company-info">
+    <div class="company-name">{{ company.name }}</div>
+    <div class="company-details">
+      {% if company.address %}{{ company.address }}{% endif %}
+      {% if company.city %}, {{ company.city }}{% endif %}
+      {% if company.province %} ({{ company.province }}){% endif %}
+      <br>
+      {% if company.vat_number %}P.IVA: {{ company.vat_number }} · {% endif %}
+      {% if company.phone %}Tel: {{ company.phone }}{% endif %}
+      {% if company.email %} · {{ company.email }}{% endif %}
+    </div>
+  </div>
+  {% if company.logo_url %}
+  <img src="{{ company.logo_url }}" class="company-logo" alt="Logo">
+  {% endif %}
+</div>
+
+<!-- Quote info -->
+<div class="quote-header">
+  <div>
+    <div class="quote-number">PREVENTIVO N° {{ quote.number }}</div>
+  </div>
+  <div class="quote-meta">
+    Data: {{ quote.date }}<br>
+    Validità: {{ quote.validity_days }} giorni
+  </div>
+</div>
+
+<!-- Cliente -->
+<div class="customer-box">
+  <h3>Cliente</h3>
+  <div class="customer-name">{{ customer.name }}</div>
+  {% if customer.address %}
+  <div class="customer-address">{{ customer.address }}{% if customer.city %}, {{ customer.city }}{% endif %}</div>
+  {% endif %}
+</div>
+
+<!-- Finestre -->
+<div class="section-title">Riepilogo finestre</div>
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Tipo</th>
+      <th>Misure (cm)</th>
+      <th class="text-right">Area (m²)</th>
+      <th>Note</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for w in windows %}
+    <tr>
+      <td>{{ w.position }}</td>
+      <td>{{ w.window_type }}</td>
+      <td>{{ w.width_cm }}×{{ w.height_cm }}</td>
+      <td class="text-right">{{ "%.2f"|format(w.area_mq) }}</td>
+      <td>{{ w.notes or '' }}</td>
+    </tr>
+    {% endfor %}
+    <tr class="font-bold">
+      <td colspan="3">Totale</td>
+      <td class="text-right">{{ "%.2f"|format(total_area) }}</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Prodotti per tier -->
+<div class="section-title">Opzioni prodotto</div>
+<table>
+  <thead>
+    <tr>
+      <th>Voce</th>
+      <th class="text-center tier-base">🟢 BASE</th>
+      <th class="text-center tier-medio">🟡 MEDIO</th>
+      <th class="text-center tier-top">🔴 TOP</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for cat in product_categories %}
+    <tr>
+      <td>{{ cat.name }}</td>
+      <td class="text-right">{{ format_eur(cat.total_base) }}</td>
+      <td class="text-right">{{ format_eur(cat.total_medio) }}</td>
+      <td class="text-right">{{ format_eur(cat.total_top) }}</td>
+    </tr>
+    {% endfor %}
+    <tr class="font-bold">
+      <td>Subtotale prodotti</td>
+      <td class="text-right">{{ format_eur(subtotal_base) }}</td>
+      <td class="text-right">{{ format_eur(subtotal_medio) }}</td>
+      <td class="text-right">{{ format_eur(subtotal_top) }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Voci extra -->
+{% if extras %}
+<div class="section-title">Voci aggiuntive</div>
+<div class="extras-list">
+  {% for e in extras %}
+  <div class="extra-item">
+    <span class="extra-name">{{ e.name }}{% if e.quantity > 1 %} ×{{ e.quantity }}{% endif %}</span>
+    <span class="extra-price">{{ format_eur(e.total_price) }}</span>
+  </div>
+  {% endfor %}
+  <div class="extra-item font-bold">
+    <span>Totale voci extra</span>
+    <span class="extra-price">{{ format_eur(extras_total) }}</span>
+  </div>
+</div>
+{% endif %}
+
+<!-- Totali -->
+<div class="section-title">Totali</div>
+<table class="totals-table">
+  <tbody>
+    <tr>
+      <td>Subtotale prodotti</td>
+      <td class="text-right">{{ format_eur(subtotal_base) }}</td>
+      <td class="text-right">{{ format_eur(subtotal_medio) }}</td>
+      <td class="text-right">{{ format_eur(subtotal_top) }}</td>
+    </tr>
+    {% if extras_total > 0 %}
+    <tr>
+      <td>Voci extra</td>
+      <td class="text-right" colspan="3">{{ format_eur(extras_total) }}</td>
+    </tr>
+    {% endif %}
+    <tr>
+      <td>Margine ({{ margin_pct }}%)</td>
+      <td class="text-right">{{ format_eur(margin_base) }}</td>
+      <td class="text-right">{{ format_eur(margin_medio) }}</td>
+      <td class="text-right">{{ format_eur(margin_top) }}</td>
+    </tr>
+    <tr class="total-row">
+      <td>TOTALE (IVA esclusa)</td>
+      <td class="text-right">{{ format_eur(total_base) }}</td>
+      <td class="text-right">{{ format_eur(total_medio) }}</td>
+      <td class="text-right">{{ format_eur(total_top) }}</td>
+    </tr>
+    <tr class="total-iva">
+      <td>TOTALE (IVA {{ iva_pct }}% inclusa)</td>
+      <td class="text-right">{{ format_eur(total_base_iva) }}</td>
+      <td class="text-right">{{ format_eur(total_medio_iva) }}</td>
+      <td class="text-right">{{ format_eur(total_top_iva) }}</td>
+    </tr>
+  </tbody>
+</table>
+
+{% if notes %}
+<div class="notes-box">
+  <h3>📝 Note</h3>
+  <p>{{ notes }}</p>
+</div>
+{% endif %}
+
+<div class="footer">
+  {{ company.name }}
+  {% if company.email %} · {{ company.email }}{% endif %}
+  {% if company.phone %} · {{ company.phone }}{% endif %}
+  <br>
+  Preventivo generato con <strong>Serramentista</strong> by Poonto
+</div>
+
 </body>
 </html>

@@ -102,19 +102,63 @@ async def handle_confirm_callback(update: Update, context: ContextTypes.DEFAULT_
     quote_id = session.get("current_quote_id")
 
     if data == "confirm:generate_pdf":
-        # M4: qui verrà chiamato il pdf_generator
-        # Per ora: segna come 'ready' e torna a idle
-        await QuoteService.update_status(quote_id, "ready")
-        await SessionManager.transition(query.message.chat.id, SessionState.IDLE)
-
         await query.edit_message_text(
-            "✅ *Preventivo confermato!*\n\n"
-            f"Il preventivo è stato salvato con stato *pronto*.\n"
-            "La generazione PDF sarà disponibile nella prossima versione.\n\n"
-            "Scrivi /nuovo per creare un altro preventivo.",
+            "⏳ *Generazione PDF in corso...*",
             parse_mode="Markdown"
         )
-        log.info("confirm.pdf_requested", quote_id=quote_id)
+
+        try:
+            from services.pdf_generator import pdf_generator
+
+            # Recupera numero preventivo
+            summary = await CatalogService.get_quote_summary(quote_id)
+            number = summary["quote"].get("number", "preventivo") if summary else "preventivo"
+
+            # Genera e carica PDF
+            pdf_url = await pdf_generator.generate_and_upload(quote_id, company_id, number)
+
+            if pdf_url:
+                # Scarica PDF per invio via Telegram
+                pdf_bytes = await pdf_generator.generate_pdf(quote_id)
+                if pdf_bytes:
+                    import io
+                    pdf_file = io.BytesIO(pdf_bytes)
+                    pdf_file.name = f"{number}.pdf"
+
+                    await context.bot.send_document(
+                        chat_id=query.message.chat.id,
+                        document=pdf_file,
+                        caption=f"📄 Preventivo *{number}* generato!\n\nInvialo al cliente via WhatsApp.",
+                        parse_mode="Markdown"
+                    )
+
+                await QuoteService.update_status(quote_id, "sent")
+            else:
+                # Fallback: segna come ready senza PDF
+                await QuoteService.update_status(quote_id, "ready")
+                await context.bot.send_message(
+                    chat_id=query.message.chat.id,
+                    text="⚠️ PDF non generato (WeasyPrint non disponibile). "
+                         "Il preventivo è stato salvato come *pronto*.",
+                    parse_mode="Markdown"
+                )
+
+        except Exception as e:
+            log.error("confirm.pdf_error", error=str(e), quote_id=quote_id)
+            await QuoteService.update_status(quote_id, "ready")
+            await context.bot.send_message(
+                chat_id=query.message.chat.id,
+                text=f"⚠️ Errore generazione PDF: {e}\n"
+                     "Il preventivo è stato salvato come *pronto*.",
+                parse_mode="Markdown"
+            )
+
+        await SessionManager.transition(query.message.chat.id, SessionState.IDLE)
+        await context.bot.send_message(
+            chat_id=query.message.chat.id,
+            text="✅ Scrivi /nuovo per creare un altro preventivo."
+        )
+        log.info("confirm.pdf_generated", quote_id=quote_id)
         return
 
     if data == "confirm:edit_margin":
