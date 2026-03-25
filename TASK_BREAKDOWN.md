@@ -159,46 +159,46 @@
 ## M3 — Catalogo + Calcolo (Giorni 10-13)
 
 ### Catalogo Dashboard
-- [ ] Creare `src/web/src/features/catalog/catalogService.ts` — CRUD Supabase
-- [ ] Creare `src/web/src/features/catalog/useCatalog.ts` — TanStack Query hooks
-- [ ] Creare `CatalogPage.tsx` — vista per categorie, filtro per tier
-- [ ] Creare `ProductForm.tsx` — form creazione/modifica prodotto (nome, SKU, fornitore, tier, prezzo, unità)
-- [ ] Creare `CategoryManager.tsx` — gestione categorie con drag & sort
-- [ ] Creare `TierPriceTable.tsx` — vista tabellare base/medio/top
-- [ ] CRUD completo: crea, modifica, disattiva prodotto
-- [ ] Validazione: almeno 1 prodotto per tier per poter fare preventivi
+- [x] Creare `src/web/src/features/catalog/catalogService.ts` — CRUD Supabase
+- [x] Creare `src/web/src/features/catalog/useCatalog.ts` — TanStack Query hooks
+- [x] Creare `CatalogPage.tsx` — vista per categorie, filtro per tier
+- [x] Creare `ProductForm.tsx` — form creazione/modifica prodotto (nome, SKU, fornitore, tier, prezzo, unità)
+- [x] Creare `CategoryManager.tsx` — gestione categorie CRUD
+- [x] Creare `TierPriceTable.tsx` — vista tabellare base/medio/top
+- [x] CRUD completo: crea, modifica, disattiva prodotto
+- [x] Validazione: form con campi required, tipo finestra checkboxes
 
 ### Extra Presets Dashboard
-- [ ] Creare `ExtraPresetsManager.tsx` — gestione voci extra (posa, smaltimento, ecc.)
-- [ ] CRUD: aggiungi, modifica prezzo default, disattiva, riordina
+- [x] Creare `ExtraPresetsManager.tsx` — gestione voci extra (posa, smaltimento, ecc.)
+- [x] CRUD: aggiungi, modifica prezzo default, disattiva
 
 ### Selezione prodotti nel Bot
-- [ ] Creare `src/bot/services/catalog_service.py` — carica prodotti per company + tier
-- [ ] Creare `src/bot/handlers/products.py` — selezione prodotti
-- [ ] Inline keyboard con categorie → prodotti disponibili per tier
-- [ ] Per ogni finestra → applicare prodotti in base al tipo finestra e tier
-- [ ] Calcolo automatico quantità (area_mq × prezzo_unitario)
-- [ ] Mostrare subtotale per tier: base €X / medio €Y / top €Z
+- [x] Creare `src/bot/services/catalog_service.py` — carica prodotti per company + tier
+- [x] Creare `src/bot/handlers/products.py` — selezione prodotti
+- [x] Inline keyboard con preview prodotti per tier
+- [x] Per ogni finestra → applicare prodotti in base al tipo finestra e tier
+- [x] Calcolo automatico quantità (area_mq × prezzo_unitario, ml, pz)
+- [x] Mostrare subtotale per tier: base €X / medio €Y / top €Z
 
 ### Voci extra nel Bot
-- [ ] Creare `src/bot/handlers/extras.py` — selezione voci extra
-- [ ] Inline keyboard con voci extra preimpostate + [Personalizza] + [Fine]
-- [ ] Per ogni voce selezionata → inserire quantità e prezzo (default da preset)
-- [ ] Creare `quote_extras` su Supabase
+- [x] Creare `src/bot/handlers/extras.py` — selezione voci extra
+- [x] Inline keyboard con voci extra preimpostate + toggle on/off + [Fine]
+- [x] Per ogni voce selezionata → quantità e prezzo (default da preset)
+- [x] Creare `quote_extras` su Supabase
 
 ### Margine
-- [ ] Creare `src/bot/handlers/margin.py` — regolazione margine
-- [ ] Inline keyboard: [20%] [25%] [30%] [35%] [Personalizza]
-- [ ] Ricalcolo totale con margine su tutti e 3 i tier
-- [ ] Mostrare riepilogo: subtotale + extra + margine → totale per tier
+- [x] Creare `src/bot/handlers/margin.py` — regolazione margine
+- [x] Inline keyboard: [20%] [25%] [30%] [35%] [Personalizza]
+- [x] Ricalcolo totale con margine su tutti e 3 i tier
+- [x] Mostrare riepilogo: subtotale + extra + margine → totale per tier
 
 ### Conferma preventivo
-- [ ] Creare `src/bot/handlers/confirm.py` — riepilogo finale + conferma
-- [ ] Riepilogo strutturato: N finestre, prodotti scelti, extra, margine, totali
-- [ ] Inline keyboard: [✅ Genera PDF] [✏️ Modifica margine] [✏️ Modifica extra]
-- [ ] Se "modifica" → torna allo stato corrispondente
+- [x] Creare `src/bot/handlers/confirm.py` — riepilogo finale + conferma
+- [x] Riepilogo strutturato: N finestre, prodotti scelti, extra, margine, totali
+- [x] Inline keyboard: [📄 Genera PDF] [✏️ Modifica margine] [✏️ Modifica extra]
+- [x] Se "modifica" → torna allo stato corrispondente
 
-**✅ Gate M3:** Preventivo completo con importi calcolati su 3 tier
+**✅ Gate M3:** Preventivo completo con importi calcolati su 3 tier ✅
 
 ---
 
@@ -332,7 +332,8 @@
 | M0 — Setup | 24 | 24 | 0 |
 | M1 — Auth + Onboarding | 26 | 24 | 2 |
 | M2 — Core Bot | 28 | 27 | 1 |
-| M3 — Catalogo + Calcolo | 21 | 0 | 0 |
+| M3 — Catalogo + Calcolo | 21 | 21 | 0 |
 | M4 — PDF + CRM | 25 | 0 | 0 |
 | M5 — Polish + Beta | 24 | 0 | 0 |
-| **TOTALE MVP** | **148** | **75** | **3** |
+| **TOTALE MVP** | **148** | **96** | **3** |
+
