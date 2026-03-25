@@ -258,19 +258,19 @@
 - [x] Creare `src/web/src/features/settings/useSettings.ts`
 
 ### UX Polish
-- [ ] Componenti UI mancanti: `Modal`, `Table`, `Select`, `EmptyState`, `ConfirmDialog`
-- [x] Loading states su ogni pagina (loading divs in ogni pagina)
-- [x] Empty states con CTA (in ogni pagina)
-- [x] Toast per feedback azioni (saved-toast in SettingsPage)
-- [ ] Conferma prima di azioni distruttive (cancella prodotto, scollega bot)
-- [ ] Responsive: sidebar collapsabile su mobile
-- [ ] Favicon e titolo pagina
+- [x] Componenti UI: `ConfirmDialog`, `ErrorBoundary` (Modal/Table non necessari)
+- [x] Loading states su ogni pagina
+- [x] Empty states con CTA
+- [x] Toast per feedback azioni (Sonner + saved-toast)
+- [x] Conferma per azioni distruttive (`ConfirmDialog.tsx`)
+- [x] Responsive: sidebar collapsabile su mobile (hamburger + overlay)
+- [x] Favicon SVG + titolo pagina + meta description + theme-color
 
 ### Error Handling
 - [x] Bot: catch tutte le eccezioni, messaggio user-friendly + log errore
 - [x] Bot: timeout OpenAI → "Riprova tra qualche secondo"
 - [x] Bot: Supabase down → "Servizio temporaneamente non disponibile"
-- [ ] Web: error boundary globale
+- [x] Web: error boundary globale (`ErrorBoundary.tsx` in `main.tsx`)
 - [x] Web: retry automatico query fallite (TanStack Query default)
 
 ### Test e QA
@@ -286,7 +286,7 @@
 
 ### Beta Test
 - [ ] Invitare 3-5 serramentisti beta
-- [ ] Preparare catalogo demo (3 prodotti per tier)
+- [x] Preparare catalogo demo (`seed_catalog_demo.sql` — 9 prodotti + 5 extra)
 - [ ] Raccogliere feedback su: velocità, precisione, UX bot, qualità PDF
 - [ ] Bug fixing da feedback
 
@@ -326,8 +326,8 @@
 | M2 — Core Bot | 28 | 27 | 1 |
 | M3 — Catalogo + Calcolo | 21 | 21 | 0 |
 | M4 — PDF + CRM | 25 | 24 | 1 |
-| M5 — Polish + Beta | 24 | 14 | 0 |
-| **TOTALE MVP** | **148** | **134** | **4** |
+| M5 — Polish + Beta | 24 | 21 | 0 |
+| **TOTALE MVP** | **148** | **141** | **4** |
 
 
 
