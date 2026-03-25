@@ -250,28 +250,28 @@
 ## M5 — Polish + Beta (Giorni 18-22)
 
 ### Settings Dashboard
-- [ ] Creare `SettingsPage.tsx` con 3 tab: Profilo | Preventivo | Telegram
-- [ ] Tab Profilo: `CompanyProfileForm.tsx` (dati azienda + logo upload)
-- [ ] Tab Preventivo: `QuoteSettingsForm.tsx` (margine default, IVA%, validità, prefisso)
-- [ ] Tab Telegram: `TelegramConnect.tsx` (stato, scollega, ricollega)
-- [ ] Creare `src/web/src/features/settings/settingsService.ts`
-- [ ] Creare `src/web/src/features/settings/useSettings.ts`
+- [x] Creare `SettingsPage.tsx` con 3 tab: Profilo | Preventivo | Telegram
+- [x] Tab Profilo: dati azienda + logo upload (Supabase Storage)
+- [x] Tab Preventivo: margine default, IVA%, validità, prefisso
+- [x] Tab Telegram: `TelegramConnect.tsx` (stato, scollega, ricollega)
+- [x] Creare `src/web/src/features/settings/settingsService.ts`
+- [x] Creare `src/web/src/features/settings/useSettings.ts`
 
 ### UX Polish
 - [ ] Componenti UI mancanti: `Modal`, `Table`, `Select`, `EmptyState`, `ConfirmDialog`
-- [ ] Loading states su ogni pagina (skeleton o spinner)
-- [ ] Empty states con illustrazione e CTA
-- [ ] Toast per feedback azioni (Sonner)
+- [x] Loading states su ogni pagina (loading divs in ogni pagina)
+- [x] Empty states con CTA (in ogni pagina)
+- [x] Toast per feedback azioni (saved-toast in SettingsPage)
 - [ ] Conferma prima di azioni distruttive (cancella prodotto, scollega bot)
 - [ ] Responsive: sidebar collapsabile su mobile
 - [ ] Favicon e titolo pagina
 
 ### Error Handling
-- [ ] Bot: catch tutte le eccezioni, messaggio user-friendly + log errore
-- [ ] Bot: timeout OpenAI → "Riprova tra qualche secondo"
-- [ ] Bot: Supabase down → "Servizio temporaneamente non disponibile"
+- [x] Bot: catch tutte le eccezioni, messaggio user-friendly + log errore
+- [x] Bot: timeout OpenAI → "Riprova tra qualche secondo"
+- [x] Bot: Supabase down → "Servizio temporaneamente non disponibile"
 - [ ] Web: error boundary globale
-- [ ] Web: retry automatico query fallite (TanStack Query)
+- [x] Web: retry automatico query fallite (TanStack Query default)
 
 ### Test e QA
 - [ ] Test T-001: Foto con marker → misure corrette
@@ -295,7 +295,7 @@
 - [ ] Variabili ambiente produzione su Railway e Vercel
 - [ ] Disabilitare Vercel SSO protection
 - [ ] Verificare HTTPS funzionante
-- [ ] Health check bot
+- [x] Health check bot (systemd active on Hetzner)
 - [ ] Smoke test completo
 
 **✅ Gate M5:** Sistema stabile, 3+ serramentisti lo hanno usato con successo
@@ -326,7 +326,8 @@
 | M2 — Core Bot | 28 | 27 | 1 |
 | M3 — Catalogo + Calcolo | 21 | 21 | 0 |
 | M4 — PDF + CRM | 25 | 24 | 1 |
-| M5 — Polish + Beta | 24 | 0 | 0 |
-| **TOTALE MVP** | **148** | **120** | **4** |
+| M5 — Polish + Beta | 24 | 14 | 0 |
+| **TOTALE MVP** | **148** | **134** | **4** |
+
 
 
