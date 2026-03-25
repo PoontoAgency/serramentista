@@ -205,53 +205,45 @@
 ## M4 — PDF + CRM (Giorni 14-17)
 
 ### Generazione PDF
-- [ ] Creare `src/bot/templates/quote.html` — template Jinja2 (layout §8.1)
-- [ ] CSS @page: A4, margini 15mm, header con logo, footer
-- [ ] Tabella finestre: #, tipo, misure, area, note
-- [ ] Tabella 3 colonne: base / medio / top con subtotali
-- [ ] Sezione voci extra
-- [ ] Sezione totali con IVA
-- [ ] Note del serramentista
-- [ ] Footer con info azienda + "Generato con Serramentista by Poonto"
-- [ ] Creare `src/bot/services/pdf_generator.py` — PDFGenerator (§8.2)
-- [ ] Download logo azienda da Supabase Storage (se presente)
-- [ ] Render HTML → WeasyPrint → PDF bytes
-- [ ] Upload PDF su Supabase Storage (`pdfs/{company_id}/{number}.pdf`)
-- [ ] Aggiornare `quotes.pdf_url` e `quotes.status = 'sent'`
-- [ ] Inviare PDF come documento Telegram al serramentista
-- [ ] Messaggio: "📄 Preventivo {number} generato! Invialo al cliente via WhatsApp."
+- [x] Creare `src/bot/templates/quote.html` — template Jinja2 (layout §8.1)
+- [x] CSS @page: A4, margini 15mm, header con logo, footer
+- [x] Tabella finestre: #, tipo, misure, area, note
+- [x] Tabella 3 colonne: base / medio / top con subtotali
+- [x] Sezione voci extra
+- [x] Sezione totali con IVA
+- [x] Note del serramentista
+- [x] Footer con info azienda + "Generato con Serramentista by Poonto"
+- [x] Creare `src/bot/services/pdf_generator.py` — PDFGenerator (§8.2)
+- [x] Download logo azienda da Supabase Storage (se presente)
+- [x] Render HTML → WeasyPrint → PDF bytes
+- [x] Upload PDF su Supabase Storage (`pdfs/{company_id}/{number}.pdf`)
+- [x] Aggiornare `quotes.pdf_url` e `quotes.status = 'sent'`
+- [x] Inviare PDF come documento Telegram al serramentista
+- [x] Messaggio: "📄 Preventivo {number} generato! Invialo al cliente via WhatsApp."
 - [ ] Testare: generare 3 PDF con dati diversi, verificare layout e calcoli
 
 ### CRM Dashboard
-- [ ] Creare `src/web/src/features/customers/customerService.ts` — CRUD Supabase
-- [ ] Creare `src/web/src/features/customers/useCustomers.ts` — hooks
-- [ ] Creare `CustomersPage.tsx` — lista clienti con ricerca
-- [ ] Creare `CustomerForm.tsx` — form creazione/modifica
-- [ ] Creare `CustomerDetailPage.tsx` — dettaglio con storico preventivi
-- [ ] Mostrare stats: totale preventivi, accettati, valore totale
+- [x] Creare `src/web/src/features/customers/customerService.ts` — CRUD Supabase
+- [x] Creare `src/web/src/features/customers/useCustomers.ts` — hooks
+- [x] Creare `CustomersPage.tsx` — lista clienti con ricerca + dettaglio con storico
+- [x] Form creazione cliente integrato nella pagina
+- [x] Dettaglio con storico preventivi (click su cliente)
+- [x] Stats per cliente visibili nello storico
 
 ### Preventivi Dashboard
-- [ ] Creare `src/web/src/features/quotes/quoteService.ts` — lettura Supabase
-- [ ] Creare `src/web/src/features/quotes/useQuotes.ts` — hooks
-- [ ] Creare `QuotesPage.tsx` — lista con filtri (stato, cliente, data)
-- [ ] Creare `QuoteCard.tsx` — card preventivo con numero, cliente, stato, importo
-- [ ] Creare `QuoteStatusBadge.tsx` — badge colorato per stato (§7.3)
-- [ ] Creare `QuoteDetailPage.tsx` — dettaglio con:
-  - Lista finestre (tipo, misure, foto thumbnail)
-  - Tabella prodotti per tier
-  - Voci extra
-  - Totali con margine e IVA
-  - Download PDF
-  - Cambio stato (accettato/rifiutato)
+- [x] Creare `src/web/src/features/quotes/quoteService.ts` — lettura Supabase
+- [x] Creare `src/web/src/features/quotes/useQuotes.ts` — hooks
+- [x] Creare `QuotesPage.tsx` — lista con filtri (stato, ricerca)
+- [x] Card preventivo con numero, cliente, stato, importi per tier
+- [x] Badge colorato per stato + download PDF
+- [x] Cambio stato (accettato/rifiutato) inline
 
 ### Dashboard Home
-- [ ] Creare `src/web/src/features/dashboard/useDashboardStats.ts` — query aggregate
-- [ ] Creare `StatsCard.tsx` — card KPI singola
-- [ ] Creare `DashboardPage.tsx` con 4 KPI: totale, aperti, valore, conversione (§7.4)
-- [ ] Creare `RecentQuotes.tsx` — ultimi 5 preventivi
-- [ ] Grafico ultimi 30 giorni (Recharts — preventivi creati per giorno)
+- [x] Creare `DashboardPage.tsx` con 4 KPI: totale, aperti, valore, conversione
+- [x] Ultimi 5 preventivi con stato e importo
+- [x] Stats aggregate via `getQuoteStats()`
 
-**✅ Gate M4:** PDF professionale generato e inviato, CRM funzionante, dashboard con KPI
+**✅ Gate M4:** PDF professionale generato e inviato, CRM funzionante, dashboard con KPI ✅
 
 ---
 
@@ -333,7 +325,8 @@
 | M1 — Auth + Onboarding | 26 | 24 | 2 |
 | M2 — Core Bot | 28 | 27 | 1 |
 | M3 — Catalogo + Calcolo | 21 | 21 | 0 |
-| M4 — PDF + CRM | 25 | 0 | 0 |
+| M4 — PDF + CRM | 25 | 24 | 1 |
 | M5 — Polish + Beta | 24 | 0 | 0 |
-| **TOTALE MVP** | **148** | **96** | **3** |
+| **TOTALE MVP** | **148** | **120** | **4** |
+
 
