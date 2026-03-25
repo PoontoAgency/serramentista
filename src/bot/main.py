@@ -2,11 +2,13 @@
 import logging
 import sys
 
+from telegram import Update
 from telegram.ext import (
     ApplicationBuilder,
     CommandHandler,
     MessageHandler,
     CallbackQueryHandler,
+    ContextTypes,
     filters,
 )
 
@@ -16,7 +18,13 @@ from handlers.new_quote import new_quote_handler, customer_text_handler
 from handlers.photo import photo_handler, measures_callback_handler
 from handlers.voice import voice_handler
 from handlers.commands import help_handler, status_handler, cancel_handler
+from handlers.products import handle_product_callback
+from handlers.extras import handle_extras_callback
+from handlers.margin import handle_margin_callback, handle_margin_text
+from handlers.confirm import handle_confirm_callback
 from handlers.errors import error_handler
+from services.session_service import SessionManager
+from models.session import SessionState
 
 # Logging
 logging.basicConfig(
@@ -25,6 +33,50 @@ logging.basicConfig(
     stream=sys.stdout,
 )
 logger = logging.getLogger(__name__)
+
+
+async def callback_router(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Smista le callback inline keyboard in base al prefisso."""
+    query = update.callback_query
+    data = query.data or ""
+
+    if data.startswith("measures:"):
+        await measures_callback_handler(update, context)
+    elif data.startswith("products:"):
+        await handle_product_callback(update, context)
+    elif data.startswith("extras:"):
+        await handle_extras_callback(update, context)
+    elif data.startswith("margin:"):
+        await handle_margin_callback(update, context)
+    elif data.startswith("confirm:"):
+        await handle_confirm_callback(update, context)
+    else:
+        # Fallback: prova il vecchio handler misure
+        await measures_callback_handler(update, context)
+
+
+async def text_router(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Smista i messaggi di testo in base allo stato della sessione."""
+    chat_id = update.effective_chat.id
+    session = await SessionManager.get_session(chat_id)
+
+    if not session:
+        await update.message.reply_text(
+            "👋 Non sei ancora collegato. Usa /start per iniziare."
+        )
+        return
+
+    state = session.get("state", "idle")
+    state_data = session.get("state_data", {})
+
+    if state == SessionState.AWAITING_CUSTOMER.value:
+        await customer_text_handler(update, context)
+    elif state == SessionState.ADJUSTING_MARGIN.value and state_data.get("awaiting_custom_margin"):
+        await handle_margin_text(update, context)
+    else:
+        await update.message.reply_text(
+            "Non ho capito. Usa /nuovo per creare un preventivo o /help per i comandi.",
+        )
 
 
 def main() -> None:
@@ -51,11 +103,11 @@ def main() -> None:
     # Note vocali
     app.add_handler(MessageHandler(filters.VOICE, voice_handler))
 
-    # Callback (inline keyboard buttons)
-    app.add_handler(CallbackQueryHandler(measures_callback_handler))
+    # Callback (inline keyboard buttons) — router centralizzato
+    app.add_handler(CallbackQueryHandler(callback_router))
 
-    # Testo libero (per inserimento cliente — solo quando in stato AWAITING_CUSTOMER)
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, customer_text_handler))
+    # Testo libero — router basato sullo stato sessione
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, text_router))
 
     # Error handler globale
     app.add_error_handler(error_handler)

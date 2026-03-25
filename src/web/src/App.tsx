@@ -3,11 +3,11 @@ import AppLayout from './components/layout/AppLayout'
 import LoginPage from './features/auth/LoginPage'
 import RegisterPage from './features/auth/RegisterPage'
 import OnboardingWizard from './features/onboarding/OnboardingWizard'
+import CatalogPage from './features/catalog/CatalogPage'
 import {
   DashboardPage,
   QuotesPage,
   CustomersPage,
-  CatalogPage,
   SettingsPage,
 } from './features/placeholder/PlaceholderPages'
 

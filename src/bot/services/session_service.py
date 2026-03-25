@@ -116,3 +116,23 @@ class SessionManager:
             .update({"last_activity_at": datetime.now(timezone.utc).isoformat()}) \
             .eq("telegram_chat_id", chat_id) \
             .execute()
+
+    @staticmethod
+    async def get_session(chat_id: int) -> Optional[dict]:
+        """Alias per get_or_create — restituisce la sessione corrente"""
+        return await SessionManager.get_or_create(chat_id)
+
+    @staticmethod
+    async def update_state_data(chat_id: int, state_data: dict) -> None:
+        """Aggiorna solo lo state_data della sessione"""
+        if not supabase:
+            return
+
+        supabase.table("bot_sessions") \
+            .update({
+                "state_data": state_data,
+                "last_activity_at": datetime.now(timezone.utc).isoformat(),
+            }) \
+            .eq("telegram_chat_id", chat_id) \
+            .execute()
+
