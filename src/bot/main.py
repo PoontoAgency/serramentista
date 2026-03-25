@@ -1,14 +1,9 @@
-"""
-Serramentista Bot — Entry Point
-Registra handlers e avvia il bot in polling o webhook mode.
-"""
-
+"""Serramentista Bot — Entry point"""
 import logging
+import sys
 
-import structlog
-from telegram import Update
 from telegram.ext import (
-    Application,
+    ApplicationBuilder,
     CommandHandler,
     MessageHandler,
     CallbackQueryHandler,
@@ -16,87 +11,53 @@ from telegram.ext import (
 )
 
 from config import settings
-from handlers.start import start_command, connect_command
-from handlers.commands import help_command, status_command, cancel_command
-from handlers.new_quote import new_quote_command
-from handlers.photo import handle_photo
-from handlers.voice import handle_voice
-from handlers.products import handle_product_selection
-from handlers.extras import handle_extra_selection
-from handlers.margin import handle_margin_input
-from handlers.confirm import handle_confirm
-from handlers.errors import error_handler
+from handlers.start import start_handler, connect_handler
+from handlers.new_quote import new_quote_handler, customer_text_handler
+from handlers.photo import photo_handler, measures_callback_handler
+from handlers.voice import voice_handler
+from handlers.commands import help_handler, status_handler, cancel_handler
+
+# Logging
+logging.basicConfig(
+    format="%(asctime)s [%(name)s] %(levelname)s: %(message)s",
+    level=logging.INFO,
+    stream=sys.stdout,
+)
+logger = logging.getLogger(__name__)
 
 
-def configure_logging():
-    """Configura structlog per log strutturati."""
-    logging.basicConfig(
-        level=getattr(logging, settings.log_level.upper()),
-        format="%(message)s",
-    )
-    structlog.configure(
-        processors=[
-            structlog.contextvars.merge_contextvars,
-            structlog.processors.add_log_level,
-            structlog.processors.StackInfoRenderer(),
-            structlog.dev.ConsoleRenderer() if settings.log_level == "DEBUG"
-            else structlog.processors.JSONRenderer(),
-        ],
-        wrapper_class=structlog.make_filtering_bound_logger(
-            getattr(logging, settings.log_level.upper())
-        ),
-        context_class=dict,
-        logger_factory=structlog.PrintLoggerFactory(),
-        cache_logger_on_first_use=True,
-    )
+def main() -> None:
+    """Avvia il bot in polling mode"""
+    if not settings.telegram_bot_token:
+        logger.error("TELEGRAM_BOT_TOKEN non configurato")
+        sys.exit(1)
 
+    logger.info("Avvio Serramentista Bot...")
 
-def main():
-    """Avvia il bot."""
-    configure_logging()
-    log = structlog.get_logger()
-    log.info("bot.starting", mode=settings.bot_mode)
+    app = ApplicationBuilder().token(settings.telegram_bot_token).build()
 
-    # Crea l'applicazione
-    app = Application.builder().token(settings.telegram_bot_token).build()
+    # Comandi
+    app.add_handler(CommandHandler("start", start_handler))
+    app.add_handler(CommandHandler("connect", connect_handler))
+    app.add_handler(CommandHandler("nuovo", new_quote_handler))
+    app.add_handler(CommandHandler("help", help_handler))
+    app.add_handler(CommandHandler("stato", status_handler))
+    app.add_handler(CommandHandler("annulla", cancel_handler))
 
-    # --- Comandi ---
-    app.add_handler(CommandHandler("start", start_command))
-    app.add_handler(CommandHandler("connect", connect_command))
-    app.add_handler(CommandHandler("nuovo", new_quote_command))
-    app.add_handler(CommandHandler("help", help_command))
-    app.add_handler(CommandHandler("stato", status_command))
-    app.add_handler(CommandHandler("annulla", cancel_command))
+    # Foto
+    app.add_handler(MessageHandler(filters.PHOTO, photo_handler))
 
-    # --- Messaggi ---
-    app.add_handler(MessageHandler(filters.PHOTO, handle_photo))
-    app.add_handler(MessageHandler(filters.VOICE | filters.AUDIO, handle_voice))
-    app.add_handler(MessageHandler(
-        filters.TEXT & ~filters.COMMAND,
-        handle_margin_input,  # fallback per input testo (margine, cliente, misure manuali)
-    ))
+    # Note vocali
+    app.add_handler(MessageHandler(filters.VOICE, voice_handler))
 
-    # --- Callback inline keyboard ---
-    app.add_handler(CallbackQueryHandler(handle_product_selection, pattern=r"^product:"))
-    app.add_handler(CallbackQueryHandler(handle_extra_selection, pattern=r"^extra:"))
-    app.add_handler(CallbackQueryHandler(handle_confirm, pattern=r"^confirm:"))
-    app.add_handler(CallbackQueryHandler(handle_confirm, pattern=r"^measures:"))
+    # Callback (inline keyboard buttons)
+    app.add_handler(CallbackQueryHandler(measures_callback_handler))
 
-    # --- Errori ---
-    app.add_error_handler(error_handler)
+    # Testo libero (per inserimento cliente — solo quando in stato AWAITING_CUSTOMER)
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, customer_text_handler))
 
-    # Avvia
-    if settings.bot_mode == "webhook":
-        log.info("bot.webhook", url=settings.webhook_url)
-        app.run_webhook(
-            listen="0.0.0.0",
-            port=8443,
-            url_path=f"webhook/{settings.telegram_bot_token}",
-            webhook_url=f"{settings.webhook_url}/webhook/{settings.telegram_bot_token}",
-        )
-    else:
-        log.info("bot.polling")
-        app.run_polling(allowed_updates=Update.ALL_TYPES)
+    logger.info("Bot avviato — in ascolto")
+    app.run_polling(drop_pending_updates=True)
 
 
 if __name__ == "__main__":
