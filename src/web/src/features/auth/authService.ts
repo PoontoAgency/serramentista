@@ -38,6 +38,18 @@ export async function signIn(email: string, password: string) {
   return data
 }
 
+/** Login con Google */
+export async function signInWithGoogle() {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: `${window.location.origin}/`,
+    },
+  })
+  if (error) throw error
+  return data
+}
+
 /** Logout */
 export async function signOut() {
   const { error } = await supabase.auth.signOut()
