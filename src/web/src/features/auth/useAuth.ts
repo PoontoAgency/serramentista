@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'
 import { useAuthStore } from '../../store/authStore'
-import { getCompany, getCompanySettings } from './authService'
+import { getCompany, getCompanySettings, ensureCompanyExists } from './authService'
 
 /** Hook per gestire l'autenticazione — carica user, company e settings */
 export function useAuth() {
@@ -16,10 +16,10 @@ export function useAuth() {
 
         if (session?.user) {
           setUser(session.user)
-          const [comp, sett] = await Promise.all([
-            getCompany(),
-            getCompanySettings(),
-          ])
+          let comp = await getCompany()
+          // Per utenti OAuth senza company, creala automaticamente
+          if (!comp) comp = await ensureCompanyExists()
+          const sett = await getCompanySettings()
           setCompany(comp)
           setSettings(sett)
         }
@@ -37,10 +37,10 @@ export function useAuth() {
       async (event, session) => {
         if (event === 'SIGNED_IN' && session?.user) {
           setUser(session.user)
-          const [comp, sett] = await Promise.all([
-            getCompany(),
-            getCompanySettings(),
-          ])
+          let comp = await getCompany()
+          // Per utenti OAuth senza company, creala automaticamente
+          if (!comp) comp = await ensureCompanyExists()
+          const sett = await getCompanySettings()
           setCompany(comp)
           setSettings(sett)
         } else if (event === 'SIGNED_OUT') {

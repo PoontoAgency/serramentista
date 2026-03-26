@@ -10,7 +10,7 @@ export default function AppLayout() {
 
   if (isLoading) return <FullPageSpinner />
   if (!user) return <Navigate to="/login" replace />
-  if (company && !company.onboarding_completed) return <Navigate to="/onboarding" replace />
+  if (!company || !company.onboarding_completed) return <Navigate to="/onboarding" replace />
 
   return (
     <div className="flex min-h-screen bg-neutral-50">
